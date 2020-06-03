@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import classes from './ContactData.module.css';
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
@@ -92,7 +94,7 @@ class ContactData extends Component {
     // console.log(formData);
     const order = {
       orderData: formData,
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ings,
       price: this.props.price,
     };
     axios.post('/order.json', order).then(response => {
@@ -105,15 +107,15 @@ class ContactData extends Component {
     });
   }
 
-  checkValidity(value, rules) {
-    let isValid = false;
+  // checkValidity(value, rules) {
+  //   let isValid = false;
 
-    if (rules.required) {
-      isValid = value.trim() !== '';
-    }
+  //   if (rules.required) {
+  //     isValid = value.trim() !== '';
+  //   }
 
-    return isValid;
-  }
+  //   return isValid;
+  // }
 
   inputChangedHandler = (event, inputIdentifier) => {
     const updatedOrderForm = {
@@ -123,7 +125,7 @@ class ContactData extends Component {
       ...updatedOrderForm[inputIdentifier]
     };
     updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.checkValidity(updatedFormElement.valid, updatedFormElement.validation);
+    // updatedFormElement.valid = this.checkValidity(updatedFormElement.valid, updatedFormElement.validation);
     updatedOrderForm[inputIdentifier] = updatedFormElement;
     console.log(updatedFormElement);
     this.setState({orderForm: updatedOrderForm});
@@ -163,4 +165,11 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice
+  };
+}
+
+export default connect(mapStateToProps)(ContactData);
