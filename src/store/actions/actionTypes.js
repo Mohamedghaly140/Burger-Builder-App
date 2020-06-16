@@ -20,3 +20,5 @@ export const Auth_START = 'Auth_START';
 export const Auth_SUCCESS = 'Auth_SUCCESS';
 export const Auth_FAIL = 'Auth_FAIL';
 export const Auth_LOGOUT = 'Auth_LOGOUT';
+
+export const SET_Auth_REDIRECT_PATH = 'SET_Auth_REDIRECT_PATH';
